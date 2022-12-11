@@ -1,7 +1,7 @@
 # Applying Machine Learning Methods on Heart Disease Risk Factors
 
-# Author Contributions
+### Author Contributions
 
-# Project Description
+### Project Description
 
-# Data
+### Data
