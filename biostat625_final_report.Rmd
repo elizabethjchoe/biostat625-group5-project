@@ -1,0 +1,28 @@
+---
+title: "biostat_625_final_report"
+author: "Elizabeth Choe, Yijun Guo, Yaodong Xin"
+date: "2022-12-11"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+# APPLYING MACHINE LEARNING METHODS ON HEART DISEASE RISK FACTORS
+
+### Problem to address
+Heart disease is the leading cause of death in the U.S., with one person dying every 34 seconds from cardiovascular disease. 1 in every 5 deaths in 2020 were due to heart disease. Nearly half of all Americans have at least one of three key risk factors for heart disease: high cholesterol, high blood pressure, and smoking. Although some factors cannot be controlled, some prophylactic steps can be taken to reduce risk for heart disease. Detection and prevention have the greatest impact in regards to reducing risk for cardiovascular disease. Computational developments allow for pattern detection in data that can be applied to heart disease detection and prevention for individuals.
+
+### Previous Work
+According to the U.S. CDC, high blood pressure, high cholesterol, and smoking have ranked top risk factors for heart diseases for Americans[1]. Other key factors include disease history(stroke, diabetes, obesity, etc.), life habits (inactivity, vegetables/fruit[2], alcohol, etc.), special health conditions (pregnancy). It is also demonstrated that mental factors (depression, anxiety) are frequent comorbidities associated with heart disease[3]. 
+Recent years, mathematical models have been built up to predict risk of heart disease or disease endpoints according to those health indicators. Among those approaches, application of machine learning strategies like random forests (RF), k-nearest neighbor (KNN), and decision tree (DT) has been proven to achieve high accuracy and sensitivity on heart disease prediction[4]. As for measurement of strength of significant features’ contribution towards prediction, approaches like strength scores have been used in previous studies[5]. 
+
+## Dataset: Behavioural Risk Factor Surveillance System
+The dataset we will use originates from the Behavioural Risk Factor Surveillance System (BRFSS) from CDC. BRFSS conducts telephone health status surveys across America. The most recent dataset consists of over 400,000 rows and 279 columns, several of which are variables that could potentially influence heart disease. There is a subset of this entire dataset available on Kaggle that has reduced the columns to 18 variables and cleaned up for use in machine learning projects [7].  The variables include if respondents have heart disease, their BMI, history of smoking, demographic information, comorbidities, etc. 
+
+We downloaded the entire xpt file from the CDC website. However, because of large size of the file (even when converted to .csv) there were issues pushing to GitHub. 
+To detail what we did for that step, we used the R package `foreign` to load the downloaded xpt file into R. We then subset 30 columns/ variables of interest and saved that as a separate csv file: "subsetted_cols.csv". 
+
+## Methods / Results
+
