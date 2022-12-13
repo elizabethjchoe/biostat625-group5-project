@@ -11,12 +11,8 @@ knitr::opts_chunk$set(echo = TRUE)
 
 # APPLYING MACHINE LEARNING METHODS ON HEART DISEASE RISK FACTORS
 
-### Problem to address
-Heart disease is the leading cause of death in the U.S., with one person dying every 34 seconds from cardiovascular disease. 1 in every 5 deaths in 2020 were due to heart disease. Nearly half of all Americans have at least one of three key risk factors for heart disease: high cholesterol, high blood pressure, and smoking. Although some factors cannot be controlled, some prophylactic steps can be taken to reduce risk for heart disease. Detection and prevention have the greatest impact in regards to reducing risk for cardiovascular disease. Computational developments allow for pattern detection in data that can be applied to heart disease detection and prevention for individuals.
-
-### Previous Work
-According to the U.S. CDC, high blood pressure, high cholesterol, and smoking have ranked top risk factors for heart diseases for Americans[1]. Other key factors include disease history(stroke, diabetes, obesity, etc.), life habits (inactivity, vegetables/fruit[2], alcohol, etc.), special health conditions (pregnancy). It is also demonstrated that mental factors (depression, anxiety) are frequent comorbidities associated with heart disease[3]. 
-Recent years, mathematical models have been built up to predict risk of heart disease or disease endpoints according to those health indicators. Among those approaches, application of machine learning strategies like random forests (RF), k-nearest neighbor (KNN), and decision tree (DT) has been proven to achieve high accuracy and sensitivity on heart disease prediction[4]. As for measurement of strength of significant features’ contribution towards prediction, approaches like strength scores have been used in previous studies[5]. 
+### Introduction
+Heart disease is the leading cause of death in the U.S. Main risk factors of heart diseases among Americans including high blood pressure, high cholesterol, smoking, alcohol, and inactivity have been rigorously investigated. In recent years, aside from those physical factors, socioeconomic status(SES) has become a hot topic to determine the risk stratification of several chronic diseases. SES is typically represented by income level, employment status, education level, and environmental factors. The discrepancy of SES not only leads to different risk levels of diseases adjusted for other factors but also influences the effect of interventions. For example, the efficacy of behavioral counseling on smoking cessation is more limited among low SES groups than high SES groups, and taking SES markers into account could enhance the precision of risk prediction systems \cite{1}. Though it was shown that heart disease incidence and mortality are higher among middle and low SES groups, the impact of SES on the effects of different risk factors has not been rigorously demonstrated. The dynamic SES under social events (eg: COVID-19, economic downturn) also calls for renewal of research findings. Therefore, in our project, we would like to investigate the influence of SES using 2021’s research data and provide the latest evidence of SES’s function on heart disease risk prediction, which might implicit possible prophylactic steps in different SES groups in American.  
 
 ## Dataset: Behavioural Risk Factor Surveillance System
 The dataset we will use originates from the Behavioural Risk Factor Surveillance System (BRFSS) from CDC. BRFSS conducts telephone health status surveys across America. The most recent dataset consists of over 400,000 rows and 279 columns, several of which are variables that could potentially influence heart disease. There is a subset of this entire dataset available on Kaggle that has reduced the columns to 18 variables and cleaned up for use in machine learning projects [7].  The variables include if respondents have heart disease, their BMI, history of smoking, demographic information, comorbidities, etc. 
@@ -26,3 +22,9 @@ To detail what we did for that step, we used the R package `foreign` to load the
 
 ## Methods / Results
 
+
+
+
+
+## Reference
+\bibitem{1} Schultz WM, Kelli HM, Lisko JC, Varghese T, Shen J, Sandesara P, Quyyumi AA, Taylor HA, Gulati M, Harold JG, Mieres JH, Ferdinand KC, Mensah GA, Sperling LS. Socioeconomic Status and Cardiovascular Outcomes: Challenges and Interventions. Circulation. 2018 May 15;137(20):2166-2178. doi: 10.1161/CIRCULATIONAHA.117.029652. PMID: 29760227; PMCID: PMC5958918.
