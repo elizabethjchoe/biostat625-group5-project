@@ -1,6 +1,7 @@
 # Impact of Socioeconomic Factors on Heart Disease Incidence in U.S.
 
 ### Author Contributions
+All members were responsible for searching for dataset to use and selecting/ narrowing down variables to use for this project 
 ###### Yijun Guo
 
 ###### Yaodong Xin
