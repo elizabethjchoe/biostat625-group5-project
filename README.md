@@ -2,11 +2,11 @@
 
 ### Author Contributions
 All members were responsible for searching for dataset to use and selecting/ narrowing down variables to use for this project 
-###### Yijun Guo
+#### Yijun Guo
 
-###### Yaodong Xin
+#### Yaodong Xin
 
-###### Elizabeth Choe
+#### Elizabeth Choe
 
 ### Project Description
 
