@@ -2,7 +2,9 @@
 title: "biostat_625_final_report"
 author: "Elizabeth Choe, Yijun Guo, Yaodong Xin"
 date: "2022-12-11"
-output: html_document
+output:
+  pdf_document: default
+  html_document: default
 ---
 
 ```{r setup, include=FALSE}
@@ -19,6 +21,10 @@ The dataset we will use originates from the Behavioural Risk Factor Surveillance
 
 We downloaded the entire xpt file from the CDC website. However, because of large size of the file (even when converted to .csv) there were issues pushing to GitHub. 
 To detail what we did for that step, we used the R package `foreign` to load the downloaded xpt file into R. We then subset 30 columns/ variables of interest and saved that as a separate csv file: "subsetted_cols.csv". 
+```{r}
+# comment
+```
+
 
 ## Methods / Results
 
