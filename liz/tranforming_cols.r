@@ -1,9 +1,5 @@
 dat <- read.csv("subsetted_cols.csv")
 
-test <- as.data.frame(dat$GENHLTH)
-
-test[test == 7 | test == 9] <- NA
-
 SEXVAR <- dat[,"SEXVAR"]
 
 subset1 <- dat[,c("GENHLTH","PERSDOC3","MEDCOST1","CHECKUP1",
@@ -27,5 +23,5 @@ ALCDAY5[ALCDAY5 == 777 | ALCDAY5 == 999 ] <- NA
 X_AGEG5YR <- dat[,"X_AGEG5YR"]
 
 transformed <- cbind(SEXVAR,subset1,subset2,EMPLOY1,ALCDAY5,X_AGEG5YR)
-write.csv(transformed, "transformed_data.csv")
+write.csv(transformed, "transformed_data.csv", row.names = F)
 
