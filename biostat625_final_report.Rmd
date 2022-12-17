@@ -1,56 +1,53 @@
 ---
-title: "biostat_625_final_report"
-author: "Elizabeth Choe, Yijun Guo, Yaodong Xin"
-date: "2022-12-11"
+title: "Impact of Socioeconomic Factors on Heart Disease Incidence in U.S."
+author: "Elizabeth Choe, Yaodong Xin, Yijun Guo"
 output:
-  html_document: default
-  pdf_document: default
+  bookdown::pdf_document2:
+    fig_crop: no
+    keep_tex: yes
+    latex_engine: lualatex
+    number_sections: yes
+    toc: no
+fontsize: 12pt
+classoption: twocolumn
 ---
 
-```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE)
-```
 
-# APPLYING MACHINE LEARNING METHODS ON HEART DISEASE RISK FACTORS
+\thispagestyle{empty}
+\section{Introduction}
+\vspace{-0.2cm}
+Heart disease is the leading cause of death in the U.S. Main risk factors of heart diseases among Americans including high blood pressure, high cholesterol, smoking, alcohol, and inactivity have been rigorously investigated. In recent years, aside from those physical factors, socioeconomic status(SES) has become a hot topic to determine the risk stratification of several chronic diseases. 
 
-### Introduction
-Heart disease is the leading cause of death in the U.S. Main risk factors of heart diseases among Americans including high blood pressure, high cholesterol, smoking, alcohol, and inactivity have been rigorously investigated. In recent years, aside from those physical factors, socioeconomic status(SES) has become a hot topic to determine the risk stratification of several chronic diseases. SES is typically represented by income level, employment status, education level, and environmental factors. The discrepancy of SES not only leads to different risk levels of diseases adjusted for other factors but also influences the effect of interventions. For example, the efficacy of behavioral counseling on smoking cessation is more limited among low SES groups than high SES groups, and taking SES markers into account could enhance the precision of risk prediction systems \cite{1}. Though it was shown that heart disease incidence and mortality are higher among middle and low SES groups, the impact of SES on the effects of different risk factors has not been rigorously demonstrated. The dynamic SES under social events (eg: COVID-19, economic downturn) also calls for renewal of research findings. Therefore, in our project, we would like to investigate the influence of SES using 2021’s research data and provide the latest evidence of SES’s function on heart disease risk prediction, which might implicit possible prophylactic steps in different SES groups in American.  
+SES is typically represented by income level, employment status, education level, and environmental factors. The discrepancy of SES not only leads to different risk levels of diseases adjusted for other factors but also influences the effect of interventions. For example, the efficacy of behavioral counseling on smoking cessation is more limited among low SES groups than high SES groups, and taking SES markers into account could enhance the precision of risk prediction systems[1]. Though it was shown that heart disease incidence and mortality are higher among middle and low SES groups, the impact of SES on the effects of different risk factors has not been rigorously demonstrated. The dynamic SES under social events (e.g.: COVID-19, economic downturn) also calls for renewal of research findings.
 
-## Dataset: Behavioural Risk Factor Surveillance System
-The dataset we will use originates from the Behavioural Risk Factor Surveillance System (BRFSS) from CDC. BRFSS conducts telephone health status surveys across America. The most recent dataset consists of over 400,000 rows and 279 columns, several of which are variables that could potentially influence heart disease. There is a subset of this entire dataset available on Kaggle that has reduced the columns to 18 variables and cleaned up for use in machine learning projects [7].  The variables include if respondents have heart disease, their BMI, history of smoking, demographic information, comorbidities, etc. 
-
-We downloaded the entire xpt file from the CDC website. However, because of large size of the file (even when converted to .csv) there were issues pushing to GitHub. 
-To detail what we did for that step, we used the R package `foreign` to load the downloaded xpt file into R. We then subset 30 columns/ variables of interest and saved that as a separate csv file: "subsetted_cols.csv". 
-
-Summary statistics of all variables:
-```{r}
-## need to re-label the transformed data! for unity 
-data <- read.csv("./liz/transformed_data.csv")
-
-# install.packages('vtable')
-library('vtable')
-
-sumtable(data = data)
-```
-
-Closer look at the socioeconomic variables: insurance (PRIMINSR), doctor (PERSDOC3), costs (MEDCOST1), checkups (CHECKUP1), education (EDUCA), employment status (EMPLOY1), income (INCOME3)
-```{r}
-# heart disease
-# renamed <- read.csv("liz/subsetted_cols_RENAME.csv")
-# heartdisease <- renamed[,"HEARTDISEASE"]
-
-# SES variables: 
-ses_subset <- data[,c("PRIMINSR", "PERSDOC3", "MEDCOST1", "CHECKUP1", "EDUCA", "EMPLOY1", "INCOME3")]
-
-table(ses_subset$PRIMINSR)
-```
+Therefore, in our project, we would like to investigate the influence of SES using 2021’s research data and provide the latest evidence of SES’s function on heart disease risk prediction, which might implicit possible prophylactic steps in different SES groups in America. The computing and visualization codes are in \href{https://github.com/elizabethjchoe/biostat625-group5-project}{625 project} 
 
 
-## Methods / Results
+\section{Methods}
+\vspace{-0.4cm}
+\subsection{Dataset}
+\vspace{-0.2cm}
+The dataset used in our project originates from the Behavioral Risk Factor Surveillance System (BRFSS) of CDC, which includes data of telephone health status surveys across America. The 2021 dataset consists of over 400,000 observations and 279 variables. [number] Variables related to heart disease were extracted as subset for analysis in our project: 1) Outcome: the personal reported incidence of heart disease (CHD) or myocardial infarction (MI) was taken as the outcome; 2) SES factors: income level,education level, employment status, and environmental factors about insurance, healthcare provider, and frequency of body check; 3) Confounders: demographic information(age, sex, race), disease history(diabetes, kidney disease, skin disease), life habits(alcohol intake, smoking, exercise), general health indicators(physical/mental health score, BMI). The above variables are renamed for analysis convenience, See original BRFSS variable codes and new codes in \href{https://github.com/elizabethjchoe/biostat625-group5-project}{coding table} and \textbf{Table 1}.
+
+\vspace{-0.4cm}
+\subsection{Statistical analyses}
+\vspace{-0.2cm}
+Statistical analyses were conducted by RStudio, and result visualization were conducted by $ggplot2$, $gtsummary$ and $dplyr$ packages. To begin analysis, since the data was derived from social telephone survey, transformations of variable categories were firstly conducted. Values represent "Refuse","Don’t know/Not Sure", "Not asked or Missing" were treated as missing values. Unordered categorical variables were treated as dummy variables during modeling. After transformation, data visualizations were created to explore the distributions of variable values. Associations between outcome and other variables selected were investigated by ,,,,,. We also showed the proportion of missing values in each variable \textbf{Table 1}. \textbf{Figure 1} further displayed the nonrandom missing pattern for several variables.
+
+\vspace{-0.4cm}
+\subsection{Data Processing}
+\vspace{-0.2cm}
+1) The nonrandom missing pattern and missing abundance called for imputation. 2) Unbalanced data treatment
 
 
 
+\vspace{-0.4cm}
+\subsection{Models and Evaluation}
+\vspace{-0.2cm}
+
+\section{Results}
+\section{Conclusion and Discussion}
 
 
-## Reference
-\bibitem{1} Schultz WM, Kelli HM, Lisko JC, Varghese T, Shen J, Sandesara P, Quyyumi AA, Taylor HA, Gulati M, Harold JG, Mieres JH, Ferdinand KC, Mensah GA, Sperling LS. Socioeconomic Status and Cardiovascular Outcomes: Challenges and Interventions. Circulation. 2018 May 15;137(20):2166-2178. doi: 10.1161/CIRCULATIONAHA.117.029652. PMID: 29760227; PMCID: PMC5958918.
+\section*{References}
+[1] Schultz WM, Kelli HM, Lisko JC, Varghese T, Shen J, Sandesara P, Quyyumi AA, Taylor HA, Gulati M, Harold JG, Mieres JH, Ferdinand KC, Mensah GA, Sperling LS. Socioeconomic Status and Cardiovascular Outcomes: Challenges and Interventions. Circulation. 2018 May 15;137(20):2166-2178. doi: 10.1161/CIRCULATIONAHA.117.029652. PMID: 29760227; PMCID: PMC5958918.
