@@ -1,0 +1,181 @@
+---
+title: "Transformation and statistical analysis"
+author: "Elizabeth, Yijun Guo"
+date: '2022-12-17'
+output:
+  html_document: default
+  pdf_document: default
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(dplyr)
+library(gtsummary)
+library(ggplot2)
+library(VIM)
+```
+
+
+# Variable transformation
+```{r}
+dat<-read.csv("subsetted_cols.csv")
+dat <- dat[is.na(dat$X_MICHD)==FALSE,]
+attach(dat)
+SEXVAR <- dat[,"SEXVAR"]
+
+subset1 <- dat%>%select("GENHLTH","PERSDOC3","MEDCOST1","CHECKUP1",
+                  "EXERANY2","CVDSTRK3","CHCSCNCR",
+                  "CHCKDNY2","DIABETE4","EDUCA", "DECIDE",
+                  "SMOKE100","X_CASTHM1","X_RACEGR3")
+subset1[subset1 == 7 | subset1 == 9] <- NA
+
+subset2 <- dat%>%select("PHYSHLTH","MENTHLTH","PRIMINSR",
+                  "INCOME3")
+subset2[subset2 == 77 | subset2 == 99 ] <- NA
+subset2[subset2 == 88 ] <- 0
+
+
+EMPLOY1 <- dat[,c("EMPLOY1")]
+EMPLOY1[EMPLOY1 == 9 ] <- NA
+
+ALCDAY5<-dat[,c("ALCDAY5")]
+ALCDAY5[ALCDAY5 == 777 | ALCDAY5 == 999 ] <- NA
+
+
+X_AGEG5YR <- dat[,"X_AGEG5YR"]
+X_MICHD<- dat[,"X_MICHD"]
+X_BMI5CAT<- dat[,"X_BMI5CAT"]
+
+
+transformed <- cbind(SEXVAR,subset1,subset2,EMPLOY1,ALCDAY5,X_AGEG5YR,X_MICHD,X_BMI5CAT)
+```
+
+
+## Descriptive analysis
+```{r}
+head(transformed)
+
+trans1<-transformed
+attach(trans1)
+
+## Binary
+
+trans1$SEXVAR<- ifelse(trans1$SEXVAR==1,"Male",ifelse(trans1$SEXVAR==2,"Female",NA))
+trans1$CVDSTRK3<-ifelse(trans1$CVDSTRK3==1,"Yes",ifelse(trans1$SEXVAR==2,"No",NA))
+trans1$CHCSCNCR<-ifelse(trans1$CHCSCNCR==1,"Yes",ifelse(trans1$CHCSCNCR==2,"No",NA))
+trans1$X_CASTHM1<-ifelse(trans1$X_CASTHM1==1,"No",ifelse(trans1$X_CASTHM1==2,"Yes",NA))
+trans1$CHCKDNY2<-ifelse(trans1$CHCKDNY2==1,"Yes",ifelse(trans1$CHCKDNY2==2,"No",NA))
+trans1$DIABETE4<-ifelse(trans1$DIABETE4==1|DIABETE4==2,"Yes",ifelse(trans1$DIABETE4==3|DIABETE4==4,"No",NA))
+trans1$DECIDE<-ifelse(trans1$DECIDE==1,"Yes",ifelse(trans1$DECIDE==2,"No",NA))
+trans1$SMOKE100<-ifelse(trans1$SMOKE100==1,"Yes",ifelse(trans1$SMOKE100==2,"No",NA))
+trans1$EXERANY2<-ifelse(trans1$EXERANY2==1,"Yes",ifelse(trans1$EXERANY2==2,"No",NA))
+trans1$X_MICHD<-ifelse(trans1$X_MICHD==1,"Yes",ifelse(trans1$X_MICHD==2,"No",NA))
+trans1$MEDCOST1<-ifelse(trans1$MEDCOST1==1,"Yes",ifelse(trans1$MEDCOST1==2,"No",NA))
+
+##Category
+
+c_race<-c("White only, Non-Hispanic","Black only, Non-Hispanic","Other race only, Non-Hispanic","Multiracial, Non-Hispanic","Hispanic")
+for (i in 1: length(c_race)){
+  trans1$X_RACEGR3[trans1$X_RACEGR3==i]<-c_race[i]
+}
+
+c_GENHLTH<-c("Excellent","Very Good","Good","Fair","Poor")
+for (i in 1: length(c_race)){
+  trans1$GENHLTH[trans1$GENHLTH==i]<-c_GENHLTH[i]
+}
+
+for (i in 1: 11){
+  if (i==1){
+    trans1$INCOME3[trans1$INCOME3==i]<-"<10000"
+  }
+  else if (i<=11){
+  trans1$INCOME3[trans1$INCOME3==i]<-paste0(10000+(i-2)*5000, "~",10000+(i-1)*5000,sep="")
+  }
+  else {
+  trans1$INCOME3[trans1$INCOME3==i]<-">200000"
+  }
+}
+
+c_edu<-c("Never attended","Elementary","Some high school","High school graduate","Some college or
+technical school","College graduate")
+for (i in 1: length(c_edu)){
+  trans1$EDUCA[trans1$EDUCA==i]<-c_edu[i]
+}
+
+c_employ<-c("Employed for wages","Self-employed","Out of work for 1 year or more","Out of work for < 1 year","A homemaker","A student","Retired","Unable to work")
+for (i in 1:length(c_employ)){
+  trans1$EMPLOY1[trans1$EMPLOY1==i]<-c_employ[i]
+}
+
+c_check<-c("< 12 months ago","1 year but < 2 years ago","2 years but < 5 years ago","5 or more years ago")
+for (i in 1:length(c_check)){
+  trans1$CHECKUP1[trans1$CHECKUP1==i]<-c_check[i]
+}
+trans1$CHECKUP1[trans1$CHECKUP1==8]<-"Never"
+
+
+c_perdoc<-c("Yes, only one","More than one","No")
+for (i in 1:length(c_perdoc)){
+  trans1$PERSDOC3[trans1$PERSDOC3==i]<-c_perdoc[i]
+}
+
+## Continuous
+trans1$ALCDAY5[is.na(trans1$ALCDAY5)==FALSE&trans1$ALCDAY5<=107&trans1$ALCDAY5>=101]<-trans1$ALCDAY5[is.na(trans1$ALCDAY5)==FALSE&trans1$ALCDAY5<=107&trans1$ALCDAY5>=101]-100
+trans1$ALCDAY5[is.na(trans1$ALCDAY5)==FALSE&trans1$ALCDAY5<=201&trans1$ALCDAY5>=230]<-trans1$ALCDAY5[is.na(trans1$ALCDAY5)==FALSE&trans1$ALCDAY5<=201&trans1$ALCDAY5>=230]-200
+trans1$ALCDAY5[is.na(trans1$ALCDAY5)==FALSE&trans1$ALCDAY5==888]<-0
+
+
+# Variables Table (SES not included)
+trans1 %>%
+  select("SEXVAR","X_RACEGR3","GENHLTH","PHYSHLTH","MENTHLTH","CVDSTRK3","CHCSCNCR","X_CASTHM1",
+                  "CHCKDNY2","DIABETE4","DECIDE","SMOKE100","ALCDAY5","EXERANY2","X_MICHD","X_BMI5CAT") %>%
+  tbl_summary(missing = "no",
+              label = list(X_MICHD ~ "Heart disease(_MICHD)",
+                           SEXVAR ~ "Sex(SEXVAR)",
+                           X_BMI5CAT ~ "BMI(X_BMI5CAT)",
+                           X_RACEGR3 ~ "Race(_RACEGR3)",
+                           GENHLTH ~ "General health score(GENHLTH)",
+                           PHYSHLTH ~ "Physical health score(PHYSHLTH)",
+                           MENTHLTH ~ "Mental health score(MENTHLTH)",
+                           CVDSTRK3 ~ "Stroke(CVDSTRK3)",
+                           CHCSCNCR ~ "Skin cancer(CHCSCNCR)",
+                           X_CASTHM1 ~ "Asthma(_CASTHM1)",
+                           CHCKDNY2 ~ "Kidney disease(CHCKDNY2)",
+                           DIABETE4 ~ "Diabetes(DIABETE4)",
+                           DECIDE ~ "Desicion impairment(DECIDE)",
+                           SMOKE100 ~ "Smoking more than 100 cigarettes in the past(SMOKE100)",
+                           ALCDAY5 ~ "Monthly dringking day",
+                           EXERANY2 ~"Exercise(EXERANY2)"),
+              type = list(ALCDAY5 ~ 'continuous'),
+              statistic = list(all_continuous() ~ "{mean} ({sd})",
+                               all_categorical() ~ "{n} ({p}%)"))%>% bold_labels
+
+
+
+# Variables Table (SES)
+trans1 %>%
+  select("EDUCA","EMPLOY1","MEDCOST1","CHECKUP1","PERSDOC3") %>%
+  tbl_summary(missing = "no",
+              label = list(
+                           EDUCA ~ "Education(EDUCA)",
+                           EMPLOY1 ~ "Employment status(EMPLOY1)",
+                           MEDCOST1 ~ "Can't afford in past 1 year(MEDCOST1)",
+                           CHECKUP1 ~ "Time since last checkup(CHECKUP1)",
+                           PERSDOC3 ~ "Have personal health care provider(PERSDOC3)"
+              ),
+              statistic = list(all_categorical() ~ "{n} ({p}%)"))%>%bold_labels%>%as_tibble
+
+
+
+
+```
+# Missing data
+
+## Notes: This analysis shows the proportion of NA after transformation and deleteing observations without outcome values, the value of proportion might be different from the original proportion showed in github README form.
+```{r}
+round(colSums(is.na(transformed))/nrow(trans1)*100,2)
+
+#show missing pattern
+matrixplot(transformed)
+
+```
