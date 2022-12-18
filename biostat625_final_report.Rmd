@@ -38,10 +38,10 @@ The dataset used in our project originates from the Behavioral Risk Factor Surve
 \vspace{-0.2cm}
 Statistical analyses were conducted by RStudio, and result visualization were conducted by $ggplot2$, $gtsummary$ and $dplyr$ packages. To begin analysis, since the data was derived from social telephone survey, transformations of variable categories were firstly conducted. Values represent "Refuse","Don’t know/Not Sure", "Not asked or Missing" were treated as missing values. Unordered categorical variables were treated as dummy variables during modeling. 
 
-After transformation, data visualizations were created to show associations between outcome and other variables by conducting logistic regression. Proportions of missing values for each variable are also displayed \textbf{Table 1}, and \textbf{Figure 1} further demonstrated the nonrandom missing pattern for variables.
+After transformation, data visualizations were created to show associations between outcome and other variables by conducting logistic regression. By investigating the distribution of values in each categories, we also found that there exist unbalanced data in our data set, especially for outcomes\textbf{Figure 1}(See detailed analysis in  \href{liz/Transformation and descriptive.Rmd}{transformation and descriptive}). Proportions of missing values for each variable are also displayed in \textbf{Table 1}, and \textbf{Figure 2} further demonstrated the nonrandom missing pattern for variables.
 
 ![](liz/Variable Category-1.jpg){width=50%} 
-
+![](liz/Figure 1 Missing Values-1.jpg){width=50%}
 
 \vspace{-0.4cm}
 \subsection{Data processing}
