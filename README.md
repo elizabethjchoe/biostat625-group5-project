@@ -49,4 +49,3 @@ Variables from the 2021 Behavioural Risk Factor Surveillance System (BRFSS) were
 | X_CASTHM1 | ASTHMA | Adults who have been told they currently have asthma | (1) No (2) Yes (9) Don't know/ Not sure | 0 |
 | X_RACEGR3 | RACE | Five-level race/ethnicity category | (1) White (2) Black (3) Other (4) Multiracial (5) Hispanic (9) Don't know / Not Sure / Refused | 0 |
 | X_AGEG5YR | AGE | Fourteen-level age category | (1) 18-24 (2) 25-29 (3) 30-34 (4) 35-39 (5) 40-44 (6) 45-49 (7) 50-54 (8) 55-59 (9) 60-64 (10) 65-69 (11) 70-74 (12) 75-79 (13) 80 or older (14) Don't know/ Refused / Missing | 0 |
-| X_BMI5CAT | BMIS | Four-categories of Body Mass Index (BMI) | (1) Underweight (2) Normal weight (3) Overweight (4) Obese | 10.680 |
