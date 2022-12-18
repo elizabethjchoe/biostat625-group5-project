@@ -1,23 +1,26 @@
 # Impact of Socioeconomic Factors on Heart Disease Incidence in U.S.
 
 ### Author Contributions
-All members were responsible for searching for the dataset to use and selecting/ narrowing down variables for this project. 
+All members were responsible for searching for the dataset, selecting/ narrowing down variables for this project and conducting report integration & revision
 
 #### Yijun Guo
 * Variable transformation
-* Report integration (Overleaf) & Revision
+* Compiling descriptive tables and Introduction part in report
+* Rmarkdown formating
 
 #### Yaodong Xin
 * Build rough model for variable selection
-* Model evaluation
+* Model building and evaluation
+* Compiling result figures and tables in report
 
 #### Elizabeth Choe
-* Variable transformation
-* GitHub setup
-* Report integration & Revision
+* Data cleaning and variable transformation
+* GitHub setup and sorting of github documents
+* Compiling content of README and descriptive table.
+
 
 ### Project Description
-In this project, we aim to use different machine learning methods to analyze the heart disease dataset and predict the chance of having heart disease based on patients’ various features. Basically, we would apply SVM (Support-Vector-Machine), LR (Logistic Regression) and GBDT (Gradient Boosted Decision Tree) models to our dataset. The dataset involves more than 400k data rows so that we may try to use more efficient codes to optimize the model. To evaluate and compare different model results, we tend to use ROC curves and their corresponding AUC value as well as F1 score. For the LR and SVM model, we would use coefficients of different variables to interpret the results. For GBDT, we would use Shapley Value instead. In addition, to make our result more useful in reality, we plan to design a scorecard according to the model outputs above. To be more specific, the scorecard has a list of questions with multiple choices. Hence, we can calculate a score that reflects a patient’s risk of suffering from heart disease.
+In this project, we aim to use different machine learning methods to build heart disease prediction model with consideration of socioeconomics factors. We would apply SVM (Support-Vector-Machine), LR (Logistic Regression) and GBDT (Gradient Boosted Decision Tree) models to our dataset. The dataset involves more than 400k data rows so that we may try to use more efficient codes to optimize the model. To evaluate and compare different model results, we tend to use ROC curves and their corresponding AUC value as well as F1 score. For the LR and SVM model, we would use coefficients of different variables to interpret the results. For GBDT, we would use Shapley Value instead. In addition, to make our result more useful in reality, we'll compare the effects of factors included in the model conditionally on different combinations of socioeconomics factors.
 
 ### Data
 Variables from the 2021 Behavioural Risk Factor Surveillance System (BRFSS) were used to perform different machine learning methods.
