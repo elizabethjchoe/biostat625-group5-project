@@ -40,8 +40,8 @@ Statistical analyses were conducted by RStudio, and result visualization were co
 
 After transformation, data visualizations were created to show associations between outcome and other variables by conducting logistic regression. By investigating the distribution of values in each categories, we also found that there exist unbalanced data in our data set, especially for outcomes (See detailed analysis in  \href{liz/Transformation and descriptive.Rmd}{transformation and descriptive}). Proportions of missing values for each variable are also displayed in \textbf{Table 1}, and \textbf{Figure 1} further demonstrated the nonrandom missing pattern for variables.
 
-![](C:/Users/guoyijun/Desktop/course/625/project1/Variable Category-1.jpg){width=50%} 
-![](C:/Users/guoyijun/Desktop/course/625/project1/Figure 1 Missing Values-1.jpg){width=40%,helght=40%}
+![](liz/Variable Category-1.jpg){width=50%} 
+![](liz/Figure 1 Missing Values-1.jpg){width=40%,helght=40%}
 
 \vspace{-0.4cm}
 \subsection{Data processing}
@@ -61,7 +61,7 @@ According the statistical analyses, there are 91.8\% (398,735) normal observatio
 \vspace{-0.4cm}
 Logistic regression (LR) is a type of generalized linear model, which means that it is a linear model that is used to predict a categorical response. It is called "logistic" because it uses the logistic function to model the probability of an event occurring (\textbf{Figure 2}). The logistic function is a sigmoid curve that maps any input value to a value between 0 and 1. This allows the model to predict the probability that an example belongs to a certain class. LR is a widely used and effective method for binary classification. It is a simple and interpretable model that can be trained efficiently. However, it is sensitive to imbalanced classes and can be prone to overfitting if the number of features is very large relative to the number of examples.
 
-![](C:/Users/guoyijun/Desktop/course/625/project1/logistic function.PNG){width=50%} 
+![](liz/logistic function.PNG){width=50%} 
 \vspace{-0.4cm}
 \subsubsection{XGBoost}
 \vspace{-0.4cm}
@@ -71,7 +71,7 @@ XGBoost (eXtreme Gradient Boosting)[2] is a powerful and widely-used gradient bo
 \subsubsection{XGBoost + SparseLR}
 \vspace{-0.4cm}
 Typically, the LR model can only handle linear association between the outcome and predictors. It is always time consuming and sometimes subjective to extract features from the original dataset manually. Many researchers have explored various ways to perform an efficient feature engineering. GBDT+LR[3] was a combined machine learning model proposed to process and extract the information in the dataset automatically. To be specific, we firstly train a gradient boosting tree model. For each tree in the ensemble model, every data row is going to fall on one of the leaf nodes, forming a new feature vector. Suppose there are $k$ trees in the model and each tree has $l$ leaf nodes on average. The original $n\times m$ dataset will then be transformed into a $n\times kl$ dataset, with each row as an one-hot vector. Since the new dataset only contains 0 and 1 and most them are 0, we could apply sparse matrix algorithm to accelerate the latter Logistic Regression module. However, there is also some argument about whether the combination of GBDT and LR really outperforms a sole GBDT model. Therefore, we are also doing experiments \footnote{For better implementation in R, we choose XGBoost instead of a vanilla GBDT model.}to compare the result of different models.
-![](C:/Users/guoyijun/Desktop/course/625/project1/gbdtlr_v2.PNG){width=40%,height=40%} 
+![](liz/gbdtlr_v2.PNG){width=40%,height=40%} 
 
 \vspace{-0.4cm}
 \subsection{Evaluation}
